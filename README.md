@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SoundMind Productions - Frontend
 
-## Getting Started
+This is the Next.js TypeScript frontend for the SoundMind Productions booking system.
 
-First, run the development server:
+## 🚀 Quick Start
+
+**For complete setup instructions, see the main project documentation:**
+
+- **[📚 Complete Documentation](../README.md)** - Full project overview and setup
+- **[⚡ Quick Start Guide](../QUICKSTART.md)** - Get running in 5 minutes  
+- **[👥 Collaborator Guide](../COLLABORATOR_GUIDE.md)** - Development workflow
+
+## 🏃 Run Frontend Only
+
+If the backend is already running:
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔧 Build Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Development server
+npm run dev
 
-## Learn More
+# Production build
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+# Start production server
+npm start
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Lint code
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Structure
 
-## Deploy on Vercel
+```
+src/app/
+├── components/    # Reusable UI components
+├── contexts/      # React Context (Auth)
+├── lib/          # API services & utilities
+├── admin/        # Admin dashboard page
+├── portfolio/    # Portfolio gallery page
+├── profile/      # User profile page
+└── services/     # Services listing page
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Technology Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15** with App Directory
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Headless UI** for accessible components
+- **Heroicons** for icons
+- **React Hook Form** for form management
+
+## 🔗 API Integration
+
+The frontend communicates with the Django backend via REST API:
+- Authentication endpoints for login/register
+- Service catalog for booking interface
+- Booking management for user dashboard
+- Admin endpoints for management interface
+
+## 🎯 Key Features
+
+- ✅ **Authentication** - Login, register, profile management
+- ✅ **Booking System** - Service selection with equipment
+- ✅ **Admin Dashboard** - Statistics and booking management  
+- ✅ **Portfolio Gallery** - Interactive image showcase
+- ✅ **Responsive Design** - Mobile-first approach
+- ✅ **Type Safety** - Full TypeScript implementation
+
+---
+
+**Need help?** Check the [main documentation](../README.md) or [collaborator guide](../COLLABORATOR_GUIDE.md)!
