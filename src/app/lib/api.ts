@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
+  : 'http://127.0.0.1:8000/api';
 
 export interface Service {
   id: number;
@@ -224,10 +226,9 @@ export const apiService = {
     if (!response.ok) throw new Error('Failed to fetch categories');
     const data = await response.json();
     return data.results || data;
-  },
-
-  // Authentication methods
+  },  // Authentication methods
   async login(loginData: LoginData): Promise<AuthResponse> {
+    console.log('Attempting login with:', { email: loginData.email });
     const response = await fetch(`${API_BASE_URL}/auth/login/`, {
       method: 'POST',
       headers: {
@@ -236,8 +237,10 @@ export const apiService = {
       body: JSON.stringify(loginData),
     });
     
+    console.log('Login response status:', response.status);
     if (!response.ok) {
       const errorData = await response.json();
+      console.error('Login error:', errorData);
       throw new Error(errorData.message || 'Login failed');
     }
     
@@ -248,9 +251,12 @@ export const apiService = {
     }
     
     return data;
-  },
-
-  async register(registerData: RegisterData): Promise<AuthResponse> {
+  },  async register(registerData: RegisterData): Promise<AuthResponse> {
+    console.log('Attempting registration with:', { 
+      email: registerData.email, 
+      username: registerData.username,
+      firstName: registerData.first_name 
+    });
     const response = await fetch(`${API_BASE_URL}/auth/register/`, {
       method: 'POST',
       headers: {
@@ -259,8 +265,10 @@ export const apiService = {
       body: JSON.stringify(registerData),
     });
     
+    console.log('Register response status:', response.status);
     if (!response.ok) {
       const errorData = await response.json();
+      console.error('Registration error:', errorData);
       throw new Error(errorData.message || 'Registration failed');
     }
     
@@ -274,8 +282,7 @@ export const apiService = {
   },
 
   async logout(): Promise<void> {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
+    const token = localStorage.getItem('auth_token');    if (token) {
       try {
         await fetch(`${API_BASE_URL}/auth/logout/`, {
           method: 'POST',
@@ -290,7 +297,6 @@ export const apiService = {
     }
     localStorage.removeItem('auth_token');
   },
-
   async getCurrentUser(): Promise<User> {
     const token = localStorage.getItem('auth_token');
     if (!token) throw new Error('No authentication token');
@@ -311,8 +317,7 @@ export const apiService = {
     return response.json();
   },
 
-  async updateUserProfile(userData: Partial<User>): Promise<User> {
-    const token = localStorage.getItem('auth_token');
+  async updateUserProfile(userData: Partial<User>): Promise<User> {    const token = localStorage.getItem('auth_token');
     if (!token) throw new Error('No authentication token');
     
     const response = await fetch(`${API_BASE_URL}/auth/profile/update/`, {
@@ -332,8 +337,7 @@ export const apiService = {
     return response.json();
   },
   async verifyToken(): Promise<{valid: boolean, user?: User}> {
-    const token = localStorage.getItem('auth_token');
-    if (!token) return { valid: false };
+    const token = localStorage.getItem('auth_token');    if (!token) return { valid: false };
     
     try {
       const response = await fetch(`${API_BASE_URL}/auth/verify-token/`, {
@@ -353,7 +357,6 @@ export const apiService = {
       return { valid: false };
     }
   },
-
   async changePassword(oldPassword: string, newPassword: string, newPasswordConfirm: string): Promise<{message: string, token: string}> {
     const token = localStorage.getItem('auth_token');
     if (!token) throw new Error('No authentication token');
